@@ -1,5 +1,6 @@
 name: Update ICS Calendar
 
+# Trigger on schedule (every 30 min) or manual trigger
 on:
   schedule:
     - cron: "*/30 * * * *"
@@ -10,17 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # ensures full history for git push
+          persist-credentials: false   # important to use PAT for push
+          fetch-depth: 0               # full history required for git push
 
+      # Step 2: Download latest ICS file
       - name: Download ICS
         run: |
-          ICS_URL="https://arnoldhoogerwerf.github.io/work-calendar/calendar.ics"
+          ICS_URL="https://outlook.office365.com/owa/calendar/2afa3e8faaa042c2b59916a649cba034@hku.nl/38e962cb5ae943cb9ff2bbdf23f0918212994210837133052800/calendar.ics"
           curl -L "$ICS_URL" -o calendar.ics
           echo "ICS downloaded"
 
+      # Step 3: Commit and push changes using PAT
       - name: Commit and push using PAT
         run: |
           git config user.name "github-actions"
