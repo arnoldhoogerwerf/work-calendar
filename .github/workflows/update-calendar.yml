@@ -1,5 +1,6 @@
 name: Update ICS Calendar
 
+# Trigger on schedule (every 30 min) or manual trigger
 on:
   schedule:
     - cron: "*/30 * * * *"   # every 30 minutes
@@ -8,15 +9,26 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      # Step 1: Checkout repository
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true   # allows git push using default token
+
+      # Step 2: Download latest ICS file
       - name: Download ICS
         run: |
-          curl -L "https://arnoldhoogerwerf.github.io/work-calendar/calendar.ics" -o calendar.ics
+          ICS_URL="https://arnoldhoogerwerf.github.io/work-calendar/calendar.ics"  # replace with your Outlook ICS URL
+          curl -L "$ICS_URL" -o calendar.ics
+          echo "ICS downloaded"
+
+      # Step 3: Commit and push changes if there are any
       - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add calendar.ics
-          git commit -m "Update calendar" || echo "No changes"
+          git diff --cached --quiet || git commit -m "Update calendar"
           git push
