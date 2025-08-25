@@ -1,9 +1,9 @@
 name: Update ICS Calendar
 
-# Trigger on schedule (every 30 min) or manual trigger
+# Trigger on schedule (every 15 min) or manual trigger
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 jobs:
