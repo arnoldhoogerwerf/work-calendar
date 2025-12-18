@@ -390,9 +390,9 @@ body
                         <span  id="diagnosticToggle" >More details</span>
                     </button>
                 </div>
-                <pre class="errorDetails OCRFriendly" id="diagnosticDiv" style="display:none;">clientIPAddress 172.172.87.57
-X-FEServer BN9PR03CA0743
-Date:12/18/2025 8:44:26 PM
+                <pre class="errorDetails OCRFriendly" id="diagnosticDiv" style="display:none;">clientIPAddress 64.236.142.131
+X-FEServer CH2PR18CA0038
+Date:12/18/2025 8:56:11 PM
 </pre>
                 
 
